@@ -1,0 +1,4 @@
+[submodule "configs"]
+	path = configs
+	url = https://github.com/openwrt-dev/configs-ipq60xx.git
+	branch = main
