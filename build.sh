@@ -32,6 +32,7 @@ package_binaries() {
 }
 
 package_dl_src() {
+  [ -n "$BACKUP_DL_SRC" ] || return 0
   [ $BACKUP_DL_SRC = 1 ] || return 0
 
   local dl_dir="openwrt/dl"
