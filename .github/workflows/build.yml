@@ -8,6 +8,10 @@ on:
         description: 'Whether to upload binaries to releases'
         required: true
         default: '0'
+      backup_dl_src:
+        description: 'Whether to backup downloaded sources to releases'
+        required: false
+        default: '0'
 
 jobs:
   build:
@@ -28,6 +32,7 @@ jobs:
       TZ: Asia/Taipei
       BUILD_REPO: https://github.com/openwrt-dev/openwrt-ipq60xx.git
       BUILD_PROFILE: ${{ matrix.PROFILE }}
+      BACKUP_DL_SRC: ${{ github.event.inputs.backup_dl_src }}
     strategy:
       fail-fast: false
       matrix:
@@ -69,3 +74,10 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           files: ${{ env.BUILD_PROFILE }}.tar.gz
+
+      - name: Backup downloaded sources
+        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.backup_dl_src == 1)
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.BUILD_PROFILE }}_dl-src.tar.gz

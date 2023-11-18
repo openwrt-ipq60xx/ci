@@ -31,7 +31,16 @@ package_binaries() {
   tar -zcvf $tarball -C $bin_dir $(ls $bin_dir -1)
 }
 
+package_dl_src() {
+  [ $BACKUP_DL_SRC = 1 ] || return 0
+
+  local dl_dir="openwrt/dl"
+  local tarball="${BUILD_PROFILE}_dl-src.tar.gz"
+  tar -zcvf $tarball -C $dl_dir $(ls $dl_dir -1)
+}
+
 get_sources
 echo_version
 build_firmware
 package_binaries
+package_dl_src
