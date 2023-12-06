@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         PROFILE:
-          - ipq60xx-generic
+          - qualcommax-ipq60xx
 
     steps:
       - name: Maximize disk space
