@@ -30,7 +30,7 @@ jobs:
         - /opt/hostedtoolcache:/opt/hostedtoolcache
     env:
       TZ: Asia/Taipei
-      BUILD_REPO: https://github.com/openwrt-dev/openwrt-ipq60xx.git
+      BUILD_REPO: https://github.com/openwrt-ipq60xx/openwrt.git
       BUILD_PROFILE: ${{ matrix.PROFILE }}
       BACKUP_DL_SRC: ${{ github.event.inputs.backup_dl_src }}
     strategy:
