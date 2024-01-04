@@ -38,6 +38,7 @@ jobs:
       matrix:
         PROFILE:
           - qualcommax-ipq60xx
+          - qualcommax-ipq60xx_emmc
 
     steps:
       - name: Maximize disk space
