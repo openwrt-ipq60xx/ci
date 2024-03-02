@@ -47,12 +47,12 @@ jobs:
           use-system-docker: false
 
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
       - name: Make build cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.ccache
@@ -64,7 +64,7 @@ jobs:
         run: ./build.sh
 
       - name: Upload to Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.BUILD_PROFILE }}
           path: openwrt/bin
