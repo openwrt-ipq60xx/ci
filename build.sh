@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck disable=SC3043,SC2086,SC2164,SC2103,SC2046
+# shellcheck disable=SC2086,SC3043,SC2164,SC2103,SC2046,SC3011,SC2155
 
 get_sources() {
   git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME openwrt
@@ -11,6 +11,19 @@ echo_version() {
   echo
   echo "[=============== configs version ===============]"
   cd configs && git log -1 && cd -
+}
+
+apply_patches() {
+  [ -d patches ] || return 0
+
+  dirname $(find patches -type f -name "*.patch") | sort -u | while read -r dir; do
+    local patch_dir="$(realpath $dir)"
+    cd "$(sed 's|^patches/|openwrt/|' <<<$dir)"
+    find $patch_dir -type f -name "*.patch" | while read -r patch; do
+      git am $patch
+    done
+    cd -
+  done
 }
 
 build_firmware() {
@@ -42,6 +55,7 @@ package_dl_src() {
 
 get_sources
 echo_version
+apply_patches
 build_firmware
 package_binaries
 package_dl_src
