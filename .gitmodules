@@ -2,3 +2,7 @@
 	path = configs
 	url = https://github.com/openwrt-ipq60xx/configs.git
 	branch = main
+[submodule "patches"]
+	path = patches
+	url = https://github.com/openwrt-ipq60xx/patches.git
+	branch = main
