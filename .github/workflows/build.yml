@@ -70,7 +70,6 @@ jobs:
           path: openwrt/bin
 
       - name: Set release tag
-        if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
         run: echo "RELEASE_TAG=$(date +%Y%m%d)" >> $GITHUB_ENV
 
       - name: Upload to Releases
