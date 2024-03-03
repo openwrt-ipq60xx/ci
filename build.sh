@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck disable=SC2086,SC3043,SC2164,SC2103,SC2046,SC3011,SC2155
+# shellcheck disable=SC2086,SC3043,SC2164,SC2103,SC2046,SC2155
 
 get_sources() {
   git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME openwrt
@@ -18,7 +18,7 @@ apply_patches() {
 
   dirname $(find patches -type f -name "*.patch") | sort -u | while read -r dir; do
     local patch_dir="$(realpath $dir)"
-    cd "$(sed 's|^patches/|openwrt/|' <<<$dir)"
+    cd "$(echo $dir | sed 's|^patches/|openwrt/|')"
     find $patch_dir -type f -name "*.patch" | while read -r patch; do
       git am $patch
     done
