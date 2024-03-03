@@ -3,6 +3,11 @@
 
 get_sources() {
   git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME openwrt
+
+  cd openwrt
+  ./scripts/feeds update -a
+  ./scripts/feeds install -a
+  cd -
 }
 
 echo_version() {
@@ -28,9 +33,6 @@ apply_patches() {
 
 build_firmware() {
   cd openwrt
-
-  ./scripts/feeds update -a
-  ./scripts/feeds install -a
 
   cp ${GITHUB_WORKSPACE}/configs/${BUILD_PROFILE} .config
   make -j$(($(nproc) + 1)) V=e || make -j1 V=sc || exit 1
