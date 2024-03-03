@@ -2,6 +2,11 @@
 # shellcheck disable=SC2086,SC3043,SC2164,SC2103,SC2046,SC2155
 
 get_sources() {
+  # the checkout actions will set $HOME to other directory,
+  # we need to reset some necessary git configs again.
+  git config --global user.name "OpenWrt Builder"
+  git config --global user.email "buster-openwrt@ovvo.uk"
+
   git clone $BUILD_REPO --single-branch -b $GITHUB_REF_NAME openwrt
 
   cd openwrt
