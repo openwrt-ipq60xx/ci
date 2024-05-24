@@ -90,8 +90,7 @@ jobs:
         if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
         run: |
           cd openwrt
-          echo "CONFIG_SDK=y" >> .config
-          make -j$(($(nproc) + 1)) V=e || make -j1 V=sc || exit 1
+          make target/sdk/compile -j$(($(nproc) + 1)) V=e || make target/sdk/compile -j1 V=sc || exit 1
           cd -
 
       - name: Release SDK
@@ -99,4 +98,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          files: openwrt/bin/targets/*/*/openwrt-sdk-*.tar.xz
+          files: openwrt/bin/targets/*/*/openwrt-sdk-*.tar.zst
