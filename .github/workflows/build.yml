@@ -92,6 +92,7 @@ jobs:
           cd openwrt
           make target/sdk/compile -j$(($(nproc) + 1)) V=e || make target/sdk/compile -j1 V=sc || exit 1
           cd -
+          rename "s/qualcommax-ipq60xx/${BUILD_PROFILE}/" bin/targets/*/*/openwrt-sdk-*.tar.zst
 
       - name: Release SDK
         if: (github.event_name == 'push' && startsWith(github.event.head_commit.message, '[release] ')) || (github.event.inputs.upload_release == 1)
